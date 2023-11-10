@@ -1,0 +1,52 @@
+#include <iostream>
+#include <conio.h>
+
+struct Articulo {
+    int id;
+    char descripcion[100];
+    int cantidad;
+};
+
+const int MAX_ARTICULOS = 100;
+
+int sumarCantidades(Articulo cola[], int numArticulos, Articulo nuevaCola[]) {
+    int numNuevosArticulos = 0;
+    for (int i = 0; i < numArticulos; i++) {
+        bool encontrado = false;
+        for (int j = 0; j < numNuevosArticulos; j++) {
+            if (cola[i].id == nuevaCola[j].id) {
+                nuevaCola[j].cantidad += cola[i].cantidad;
+                encontrado = true;
+                break;
+            }
+        }
+        if (!encontrado) {
+            nuevaCola[numNuevosArticulos] = cola[i];
+            numNuevosArticulos++;
+        }
+    }
+    return numNuevosArticulos;
+}
+
+int main() {
+    Articulo cola[MAX_ARTICULOS] = {
+        {1, "Articulo 1", 5},
+        {2, "Articulo 2", 10},
+        {1, "Articulo 1", 15},
+        {3, "Articulo 3", 20},
+        {2, "Articulo 2", 25}
+    };
+    int numArticulos = 5;
+
+    Articulo nuevaCola[MAX_ARTICULOS];
+    int numNuevosArticulos = sumarCantidades(cola, numArticulos, nuevaCola);
+
+    for (int i = 0; i < numNuevosArticulos; i++) {
+        std::cout << "ID: " << nuevaCola[i].id << ", Descripcion: " << nuevaCola[i].descripcion << ", Cantidad: " << nuevaCola[i].cantidad << std::endl;
+    }
+
+    getch();
+    return 0;
+}
+
+
